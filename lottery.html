@@ -1,0 +1,67 @@
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+<p id="show"></p>
+
+<script>
+    const CONF = {
+        "ssq": [33, 33, 33, 33, 33, 33, 16],
+        "dlt": [35, 35, 35, 35, 35, 12, 12],
+    }
+    const game = getGame()
+    const conf = CONF[game]
+    //
+    main()
+    function main() {
+        const ele = jQuery('#show')[0]
+        //
+        const value = getValue() || setValue()
+        ele.textContent = `${game}: ${value}`
+    }
+    //
+    function getArgs() {
+        const args = {}
+        location.search.slice(1).split("&").forEach(item => {
+            const [key, value] = item.split("=")
+            args[key] = value || true
+        })
+        return args
+    }
+    function getGame() {
+        const game = getArgs()["game"]
+        const keys = Object.keys(CONF)
+        return keys.includes(game) ? game : keys[0]
+    }
+    //
+    function getKey() {
+        const date = new Date
+        const y = date.getFullYear()
+        const m = date.getMonth() + 1
+        const d = date.getDate()
+        return `${y}-${m}-${d}`
+    }
+    function getValue() {
+        const key = getKey()
+        return localStorage.getItem(`-_-/${game}/${key}`)
+    }
+    function setValue() {
+        const key = getKey()
+        const value = newValue()
+        localStorage.setItem(`-_-/${game}/${key}`, value)
+        return value
+    }
+    function randomOne(v, i, arr) {
+        const max = conf[i] - 1
+        arr[i] = (1 + Math.random() * max | 0).toString().padStart(2, "0")
+        arr.indexOf(arr[i]) === i || randomOne(v, i, arr)
+    }
+    function newValue() {
+        const list = Array.from(conf)
+        list.forEach(randomOne)
+        //
+        const index = conf.lastIndexOf(conf[0]) + 1
+        const head = list.slice(0, index)
+        const tail = list.slice(index)
+        //
+        return head.sort().concat(tail.sort()).join(" ")
+    }
+</script>
