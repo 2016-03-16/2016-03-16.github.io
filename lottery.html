@@ -15,7 +15,8 @@
         const ele = jQuery('#show')[0]
         //
         const value = getValue() || setValue()
-        ele.textContent = `${game}: ${value}`
+        //
+        ele.textContent = `${value}`
     }
     //
     function getArgs() {
@@ -62,6 +63,6 @@
         const head = list.slice(0, index)
         const tail = list.slice(index)
         //
-        return head.sort().concat(tail.sort()).join(" ")
+        return `${head.sort().join(" ")}-${tail.sort().join(" ")}`
     }
 </script>
