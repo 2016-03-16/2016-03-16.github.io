@@ -1,0 +1,10 @@
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+<pre id="show"> </pre>
+
+<script>
+    const ele = jQuery("#show")[0]
+    const list = Object.entries(localStorage)
+    list.sort((a, b) => a[0].localeCompare(b[0]))
+    ele.textContent = list.map(([key, value]) => `${key}: ${value}`).join("\n")
+</script>
