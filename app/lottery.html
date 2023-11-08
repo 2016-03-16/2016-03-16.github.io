@@ -1,6 +1,46 @@
+<!--  -->
+
+
+
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
 
+
+
+<div id="url">
+    <a href="/app/lottery.html?game=dlt">dlt</a>
+    <br>
+    <a href="/app/lottery.html?game=ssq">ssq</a>
+</div>
 <p id="show"></p>
+
+
+
+<script>
+    function search(key) {
+        const search = location.search
+        const dict = {}
+        const index = search.indexOf("?") + 1
+        const array = search.substring(index).split("&")
+        array.forEach(item => {
+            const [key, ...value] = item.split("=")
+            dict[key] = value.length ? value.join("=") : true
+        })
+        return dict[key]
+    }
+    function copy(text) {
+        const ele = document.createElement("textarea")
+        ele.innerText = text
+        document.body.append(ele)
+        ele.select()
+        document.execCommand("copy")
+        ele.remove()
+    }
+</script>
+<script>
+    function show(text) {
+        jQuery("#show").text(text)
+    }
+</script>
 
 <script>
     const CONF = {
@@ -10,25 +50,8 @@
     const game = getGame()
     const conf = CONF[game]
     //
-    main()
-    function main() {
-        const ele = jQuery('#show')[0]
-        //
-        const value = getValue() || setValue()
-        //
-        ele.textContent = `${value}`
-    }
-    //
-    function getArgs() {
-        const args = {}
-        location.search.slice(1).split("&").forEach(item => {
-            const [key, value] = item.split("=")
-            args[key] = value || true
-        })
-        return args
-    }
     function getGame() {
-        const game = getArgs()["game"]
+        const game = search("game")
         const keys = Object.keys(CONF)
         return keys.includes(game) ? game : keys[0]
     }
@@ -66,3 +89,19 @@
         return `${head.sort().join(" ")}-${tail.sort().join(" ")}`
     }
 </script>
+
+<script>
+    if (search("game")) {
+        const value = getValue() || setValue()
+        //
+        show(`${value}`)
+        //
+        jQuery("#url").hide()
+    } else {
+        jQuery("#show").hide()
+    }
+</script>
+
+
+
+<!--  -->

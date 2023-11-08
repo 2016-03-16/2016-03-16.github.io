@@ -1,0 +1,75 @@
+<!--  -->
+
+
+
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+<body>
+    <hr />
+    <input type="text" id="input" value="" />
+    <input type="button" value="update" onclick="onButton()" />
+    <input type="button" value="copy" onclick="onCopy()" />
+    <hr />
+    <p id="text"></p>
+    <hr />
+    <div id="qrcode"></div>
+    <hr />
+</body>
+
+
+
+<script>
+    function search(key) {
+        const search = location.search
+        const dict = {}
+        const index = search.indexOf("?") + 1
+        const array = search.substring(index).split("&")
+        array.forEach(item => {
+            const [key, ...value] = item.split("=")
+            dict[key] = value.length ? value.join("=") : true
+        })
+        return dict[key]
+    }
+    function copy(text) {
+        const ele = document.createElement("textarea")
+        ele.innerText = text
+        document.body.append(ele)
+        ele.select()
+        document.execCommand("copy")
+        ele.remove()
+    }
+</script>
+<script>
+    function onButton() {
+        const text = jQuery("#input").val()
+        console.log("qrcode:", text)
+        show(text)
+    }
+    function onCopy() {
+        const text = jQuery("#input").val()
+        console.log("copy:", text)
+        copy(text)
+    }
+</script>
+<script>
+    function show(text) {
+        jQuery("#text").text(text)
+        jQuery("#input").attr("value", text)
+        jQuery('#qrcode').contents().remove()
+        jQuery('#qrcode').qrcode({ text })
+    }
+    function text() {
+        return search("q") || location.origin
+    }
+</script>
+
+<script>
+    show(text())
+</script>
+
+
+
+<!--  -->

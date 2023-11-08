@@ -1,10 +1,37 @@
+<!--  -->
+
+
+
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
 
+
+
+<hr />
 <pre id="show"> </pre>
+<hr />
+
+
+
 
 <script>
-    const ele = jQuery("#show")[0]
-    const list = Object.entries(localStorage)
-    list.sort((a, b) => a[0].localeCompare(b[0]))
-    ele.textContent = list.map(([key, value]) => `${key}: ${value}`).join("\n")
+    function show(text) {
+        jQuery("#show").text(text)
+    }
+    function text() {
+        const list = Object.entries(localStorage)
+        //
+        list.sort((a, b) => a[0].localeCompare(b[0]))
+        //
+        const text = list.map(([key, value]) => `${key}: ${value}`).join("\n")
+        //
+        return text
+    }
 </script>
+
+<script>
+    show(text())
+</script>
+
+
+
+<!--  -->
