@@ -4,6 +4,7 @@
 
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script type="text/javascript" src="/js/ll.lib.js"></script>
 
 
 
@@ -12,10 +13,10 @@
     <a href="/">/</a>
     <hr />
     <input type="text" id="input" value="" />
-    <input type="button" value="update" onclick="onButton()" />
+    <input type="button" value="update" onclick="onUpdate()" />
     <input type="button" value="copy" onclick="onCopy()" />
     <hr />
-    <p id="text"></p>
+    <p id="output"></p>
     <hr />
     <div id="qrcode"></div>
     <hr />
@@ -24,52 +25,30 @@
 
 
 <script>
-    function search(key) {
-        const search = location.search
-        const dict = {}
-        const index = search.indexOf("?") + 1
-        const array = search.substring(index).split("&")
-        array.forEach(item => {
-            const [key, ...value] = item.split("=")
-            dict[key] = value.length ? value.join("=") : true
-        })
-        return dict[key]
-    }
-    function copy(text) {
-        const ele = document.createElement("textarea")
-        ele.innerText = text
-        document.body.append(ele)
-        ele.select()
-        document.execCommand("copy")
-        ele.remove()
-    }
-</script>
-<script>
-    function onButton() {
-        const text = jQuery("#input").val()
-        console.log("qrcode:", text)
-        show(text)
+    function onUpdate() {
+        const value = document.getElementById("input").value
+        console.log("qrcode:", value)
+        setQrcode(value)
     }
     function onCopy() {
-        const text = jQuery("#input").val()
-        console.log("copy:", text)
-        copy(text)
+        const value = document.getElementById("input").value
+        console.log("copy:", value)
+        document.ll.copy(value)
     }
 </script>
 <script>
-    function show(text) {
-        jQuery("#text").text(text)
-        jQuery("#input").attr("value", text)
+    function setQrcode(text) {
+        document.getElementById("input").value = text
+        document.getElementById("output").textContent = text
         jQuery('#qrcode').contents().remove()
         jQuery('#qrcode').qrcode({ text })
     }
-    function text() {
-        return search("q") || location.origin
+    function getQrcode() {
+        return location.ll.search("q") || location.origin
     }
 </script>
-
 <script>
-    show(text())
+    setQrcode(getQrcode())
 </script>
 
 

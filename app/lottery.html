@@ -2,7 +2,7 @@
 
 
 
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="/js/ll.lib.js"></script>
 
 
 
@@ -16,29 +16,8 @@
 
 
 <script>
-    function search(key) {
-        const search = location.search
-        const dict = {}
-        const index = search.indexOf("?") + 1
-        const array = search.substring(index).split("&")
-        array.forEach(item => {
-            const [key, ...value] = item.split("=")
-            dict[key] = value.length ? value.join("=") : true
-        })
-        return dict[key]
-    }
-    function copy(text) {
-        const ele = document.createElement("textarea")
-        ele.innerText = text
-        document.body.append(ele)
-        ele.select()
-        document.execCommand("copy")
-        ele.remove()
-    }
-</script>
-<script>
     function show(text) {
-        jQuery("#show").text(text)
+        document.getElementById("show").textContent = text
     }
 </script>
 
@@ -51,7 +30,7 @@
     const conf = CONF[game]
     //
     function getGame() {
-        const game = search("game")
+        const game = location.ll.search("game")
         const keys = Object.keys(CONF)
         return keys.includes(game) ? game : keys[0]
     }
@@ -91,14 +70,14 @@
 </script>
 
 <script>
-    if (search("game")) {
+    if (location.ll.search("game")) {
         const value = getValue() || setValue()
         //
         show(`${value}`)
         //
-        jQuery("#url").hide()
+        document.getElementById("url").hidden = true
     } else {
-        jQuery("#show").hide()
+        document.getElementById("show").hidden = true
     }
 </script>
 

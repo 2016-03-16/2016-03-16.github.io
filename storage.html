@@ -2,10 +2,6 @@
 
 
 
-<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
-
-
-
 <hr />
 <pre id="show"> </pre>
 <hr />
@@ -15,7 +11,7 @@
 
 <script>
     function show(text) {
-        jQuery("#show").text(text)
+        document.getElementById("show").textContent = text
     }
     function text() {
         const list = Object.entries(localStorage)
