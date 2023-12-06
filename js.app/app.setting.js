@@ -23,7 +23,6 @@ var NS_APP_Setting;
 <p id="${NS_APP_Setting.ID_Output}">${value}</p>
 <hr />
 `;
-        //
         innerBody(content);
     }
     NS_APP_Setting.drawBody = drawBody;
@@ -49,15 +48,16 @@ var NS_APP_Setting;
                 return;
             //
             setOutputText(value);
-            NS_Storage.setServerFirst(value);
-            NS_Storage.setAddress(browserify.yamljs.parse(res));
+            NS_Storage.data.setItem(NS_Storage.KEY.ServerFirst, value);
+            NS_Storage.data.setItem(NS_Storage.KEY.Address, browserify.yamljs.parse(res));
         });
     }
     NS_APP_Setting.onUpdate = onUpdate;
 })(NS_APP_Setting || (NS_APP_Setting = {}));
 (function (NS_APP_Setting) {
     function main() {
-        NS_APP_Setting.drawBody(NS_Storage.getServerFirst());
+        const serverFirst = NS_Storage.data.getItem(NS_Storage.KEY.ServerFirst) || "";
+        NS_APP_Setting.drawBody(serverFirst);
     }
     NS_APP_Setting.main = main;
 })(NS_APP_Setting || (NS_APP_Setting = {}));

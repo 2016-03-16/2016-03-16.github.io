@@ -8,26 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var NS_ID;
+(function (NS_ID) {
+    NS_ID.APP_Root = "LL/APP/Root";
+    NS_ID.APP_Search = "LL/APP/Search";
+})(NS_ID || (NS_ID = {}));
 var NS_Storage;
 (function (NS_Storage) {
     //
-    const utilStorage = new LL.ProxyStorage(localStorage, "-_-~/ll/html/0/");
+    let KEY;
+    (function (KEY) {
+        KEY["ServerFirst"] = "server_first";
+        KEY["Address"] = "address";
+        KEY["SearchValue"] = "search_value";
+    })(KEY = NS_Storage.KEY || (NS_Storage.KEY = {}));
     //
-    let KeyStorage;
-    (function (KeyStorage) {
-        KeyStorage["ServerFirst"] = "server_first";
-        KeyStorage["Address"] = "address";
-    })(KeyStorage || (KeyStorage = {}));
-    //
-    function getServerFirst() { return utilStorage.getItem(KeyStorage.ServerFirst) || ""; }
-    NS_Storage.getServerFirst = getServerFirst;
-    function setServerFirst(serverFirst) { utilStorage.setItem(KeyStorage.ServerFirst, serverFirst); }
-    NS_Storage.setServerFirst = setServerFirst;
-    //
-    function getAddress() { return utilStorage.getItem(KeyStorage.Address); }
-    NS_Storage.getAddress = getAddress;
-    function setAddress(address) { utilStorage.setItem(KeyStorage.Address, address); }
-    NS_Storage.setAddress = setAddress;
+    NS_Storage.data = new LL.ProxyStorage(localStorage, "-_-~/ll/html/0/");
 })(NS_Storage || (NS_Storage = {}));
 var NS_XHR;
 (function (NS_XHR) {

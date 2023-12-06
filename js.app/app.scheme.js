@@ -10,20 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var NS_APP_Scheme;
 (function (NS_APP_Scheme) {
-    function loadConfig() {
+    function load() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield loadRemote();
         });
     }
-    NS_APP_Scheme.loadConfig = loadConfig;
+    NS_APP_Scheme.load = load;
     function loadRemote() {
         return __awaiter(this, void 0, void 0, function* () {
-            const address = NS_Storage.getAddress();
+            const address = NS_Storage.data.getItem(NS_Storage.KEY.Address);
             if (!address)
                 return [];
             //
             const res = yield NS_XHR.request(address.ServerScheme);
-            //
             if (res)
                 return browserify.yamljs.parse(res).data;
             //
@@ -45,7 +44,7 @@ var NS_APP_Scheme;
 (function (NS_APP_Scheme) {
     function main() {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield NS_APP_Scheme.loadConfig();
+            const data = yield NS_APP_Scheme.load();
             //
             data.length && NS_APP_Scheme.drawBody(data);
         });
